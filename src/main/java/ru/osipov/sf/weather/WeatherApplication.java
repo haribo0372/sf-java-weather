@@ -36,14 +36,19 @@ public class WeatherApplication {
       Integer limit = readInteger("Введите срок прогноза (от 1 до 11): ");
       if (limit < 1 || limit > 11) throw new IllegalParamsException();
 
+      params.put("lat", lat);
+      params.put("lon", lon);
       params.put("limit", limit);
 
       HttpResponse<String> httpResponse = weatherService.getWeather(params);
       ResponseWeatherDTO dto = weatherMapper.toDto(httpResponse);
 
       System.out.printf(
-          "Ответ в формате JSON: %s\nТекущая температура: %.0f ℃\nСредняя температура по прогнозу: %.2f ℃\n",
-          httpResponse.body(), dto.getCurrentFactTemp(), calculateAverage(dto.getTempAvgList()));
+          "Ответ в формате JSON: %s\nТекущая температура: %.0f ℃\nСредняя температура по прогнозу (за %s дней): %.2f ℃\n",
+          httpResponse.body(),
+          dto.getCurrentFactTemp(),
+          limit,
+          calculateAverage(dto.getTempAvgList()));
       System.out.println("------------------------------------------------------");
     }
   }

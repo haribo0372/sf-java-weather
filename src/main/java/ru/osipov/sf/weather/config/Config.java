@@ -29,5 +29,9 @@ public class Config {
     if (this.apiWeatherKey == null || this.apiWeatherKey.isBlank()) {
       throw new IllegalStateException("api.weather.key is not set");
     }
+
+    if (this.apiWeatherUrl == null || this.apiWeatherUrl.isBlank()) {
+      throw new IllegalStateException("api.weather.url is not set");
+    }
   }
 }
